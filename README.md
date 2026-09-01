@@ -102,10 +102,7 @@ fixed-size volumes, one brings it back.
 #### [Anchor_1](https://github.com/Sekator778/Anchor_1) &nbsp;![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white) ![Solana](https://img.shields.io/badge/Solana-14F195?style=flat-square&logo=solana&logoColor=black)
 
 A Solana escrow program: make-offer / take-offer token exchange with vault-held
-deposits. Alongside
-[solana_boot_camp](https://github.com/Sekator778/solana_boot_camp) (devnet
-tooling) and [binap_1](https://github.com/Sekator778/binap_1) (Binance market
-data), this is where the on-chain side of my payments interest lives.
+deposits, where the on-chain side of my payments interest lives.
 
 #### [OwnTV_Core](https://github.com/Sekator778/OwnTV_Core) &nbsp;![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 
