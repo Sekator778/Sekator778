@@ -47,32 +47,42 @@ binary, Kotlin for Android TV, Rust/Anchor for Solana programs.
 
 #### [ai-delivery](https://github.com/Sekator778/ai-delivery) &nbsp;![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
-A self-hosted control plane over a coding agent. One Telegram message becomes a
-full SDLC pipeline that opens a real pull request and stops at a human merge
-gate:
+A self-hosted control plane that turns one Telegram message into supervised
+agent work. A deterministic triage sizes each task and prices its risk; an agent
+pipeline then carries it to a real pull request behind a human merge gate.
 
 ```mermaid
 flowchart LR
-    IN([Telegram / cron]) --> BA[BA] --> PD[pattern<br/>detector] --> AR[architect] --> DEV[developer]
-    DEV --> TST[tester]
-    DEV --> SEC[security]
-    TST --> REV[reviewer]
-    SEC --> REV
-    REV --> PR[pull request] --> GATE{{human merge gate}}
+  classDef entry fill:#e0f2fe,stroke:#0369a1,color:#0f172a
+  classDef agent fill:#e0e7ff,stroke:#4338ca,color:#0f172a
+  classDef verify fill:#dcfce7,stroke:#15803d,color:#0f172a
+  classDef term fill:#fef3c7,stroke:#b45309,color:#0f172a
 
-    classDef entry fill:#dbeafe,stroke:#1e40af,color:#0f172a
-    classDef agent fill:#e0e7ff,stroke:#4338ca,color:#0f172a
-    classDef check fill:#fef3c7,stroke:#b45309,color:#0f172a
-    classDef out fill:#dcfce7,stroke:#15803d,color:#0f172a
-    class IN entry
-    class BA,PD,AR,DEV,REV agent
-    class TST,SEC check
-    class PR,GATE out
+  TG([Telegram]):::entry --> TRI{triage<br>size + risk}:::entry
+  TRI --> BA[BA]:::agent
+  BA -. clarify round-trip .-> TG
+  BA --> PD[pattern detector]:::agent
+  PD --> ARCH[architect]:::agent
+  ARCH --> DEV[developer<br>git worktree]:::agent
+  TRI -. small task: skip ahead .-> DEV
+  DEV --> TEST[tester]:::verify
+  DEV --> SEC[security]:::verify
+  TEST --> REV[reviewer]:::verify
+  SEC --> REV
+  REV -- approve --> PR[pull request]:::term
+  REV -. changes requested, max 3 rounds .-> DEV
+  PR --> GATE([human merge gate]):::term
+  DEV -. any stage hits a cost/token cap .-> PARK([parked, one-tap resume]):::term
 ```
 
-It does not try to out-code the model; it owns the part that decides quality and
-cost: routing, stop conditions, cost governance, crash recovery. Runs on a
-single Linux host under systemd.
+The control plane owns what the coding model cannot: per-stage routing across
+providers — frontier models where the task is reasoned about, cheaper ones where
+it is executed — hard cost and token caps that park a task for one-tap resume
+instead of failing it, crash recovery through resumable per-stage sessions, and
+task-scoped semantic memory written back as typed lessons. Every stage lands in
+a cost ledger. None of that substrate is coupled to coding; software delivery is
+simply its first consumer. Runs on one host: systemd on Linux, a supervisor
+script on macOS.
 
 #### [chat-orchestrator](https://github.com/Sekator778/chat-orchestrator) &nbsp;![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
 
