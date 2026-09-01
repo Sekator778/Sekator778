@@ -1,10 +1,9 @@
 ### Backend and platform engineer · Berlin
 
-Twenty years in IT. I work on the depth of a running system rather than one
-layer of it — the service, the platform underneath it, and the automation that
-keeps both alive. The through-line in everything below is behaviour under
-failure: what a system does when a dependency dies, a job double-starts, or a
-model returns nonsense.
+I work on the depth of a running system rather than one layer of it — the
+service, the platform underneath it, and the automation that keeps both alive.
+The through-line in everything below is behaviour under failure: what a system
+does when a dependency dies, a job double-starts, or a model returns nonsense.
 
 My commercial work is in **payments** at a large European bank — high-throughput,
 multi-format payment processing. Before that, payroll, card and
