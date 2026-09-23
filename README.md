@@ -43,6 +43,19 @@ binary, Kotlin for Android TV, Rust/Anchor for Solana programs.
 
 ---
 
+### Open source
+
+- **Maintainer of [groovy-postbuild](https://github.com/jenkinsci/groovy-postbuild-plugin)**, a Jenkins
+  plugin running on about 16,000 controllers: releases, reviews and fixes.
+- **Collaborator on [jackson-databind-nullable](https://github.com/OpenAPITools/jackson-databind-nullable)**,
+  the `JsonNullable` module that every openapi-generator Java client depends on.
+- **Contributor to [openapi-generator](https://github.com/OpenAPITools/openapi-generator)**: Spring Boot 4
+  support for `JsonNullable` ([#24990](https://github.com/OpenAPITools/openapi-generator/pull/24990)).
+- **Contributor to [OwnTV](https://github.com/ahXN00/OwnTV)**, an Android TV media player: playlist parsing,
+  EPG matching and channel sorting fixes in [its core](https://github.com/ahXN00/OwnTV_Core/pulls?q=author%3ASekator778).
+
+---
+
 ### Selected work
 
 #### [ai-delivery](https://github.com/Sekator778/ai-delivery) &nbsp;![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -103,13 +116,6 @@ fixed-size volumes, one brings it back.
 
 A Solana escrow program: make-offer / take-offer token exchange with vault-held
 deposits, where the on-chain side of my payments interest lives.
-
-#### [OwnTV_Core](https://github.com/Sekator778/OwnTV_Core) &nbsp;![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
-
-Not my project — a fork of an Android TV IPTV engine that drives a Philips
-armeabi-v7a set at home. Device-specific tweaks stay in the fork; anything
-generic goes back upstream as a pull request, most recently EPG channel-name
-matching outside the Latin alphabet.
 
 ---
 
