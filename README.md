@@ -46,11 +46,14 @@ binary, Kotlin for Android TV, Rust/Anchor for Solana programs.
 ### Open source
 
 - **Maintainer of [groovy-postbuild](https://github.com/jenkinsci/groovy-postbuild-plugin)**, a Jenkins
-  plugin running on about 16,000 controllers: releases, reviews and fixes.
+  plugin running on about 16,000 controllers: releases, reviews and fixes. Since September 2026 also
+  [token-macro](https://github.com/jenkinsci/token-macro-plugin) and [jaxb](https://github.com/jenkinsci/jaxb-plugin).
 - **Collaborator on [jackson-databind-nullable](https://github.com/OpenAPITools/jackson-databind-nullable)**,
-  the `JsonNullable` module that every openapi-generator Java client depends on.
+  the `JsonNullable` module that every openapi-generator Java client depends on. Cut its
+  [0.2.12 release](https://github.com/OpenAPITools/jackson-databind-nullable/releases/tag/v0.2.12).
 - **Contributor to [openapi-generator](https://github.com/OpenAPITools/openapi-generator)**: Spring Boot 4
-  support for `JsonNullable` ([#24990](https://github.com/OpenAPITools/openapi-generator/pull/24990)).
+  support for `JsonNullable` ([#24990](https://github.com/OpenAPITools/openapi-generator/pull/24990)) and
+  the update to 0.2.12 ([#25096](https://github.com/OpenAPITools/openapi-generator/pull/25096)).
 - **Contributor to [OwnTV](https://github.com/ahXN00/OwnTV)**, an Android TV media player: playlist parsing,
   EPG matching and channel sorting fixes in [its core](https://github.com/ahXN00/OwnTV_Core/pulls?q=author%3ASekator778).
 
