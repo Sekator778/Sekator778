@@ -38,8 +38,9 @@ GitLab runners and EKS/EC2 monitoring — plus the per-service stacks built on t
 of them. The operational glue is small Lambdas in Rust and Python: database
 health probes, EC2 lifecycle control, secret rotation, IAM config generation.
 
-**Systems and tooling** — Rust when the answer should be one fast self-contained
-binary, Kotlin for Android TV, Rust/Anchor for Solana programs.
+**Systems and tooling** — Java for a single-writer core, Rust when the answer
+should be one fast self-contained binary, Kotlin for Android TV, Rust/Anchor for
+Solana programs.
 
 ---
 
@@ -48,18 +49,42 @@ binary, Kotlin for Android TV, Rust/Anchor for Solana programs.
 - **Maintainer of [groovy-postbuild](https://github.com/jenkinsci/groovy-postbuild-plugin)**, a Jenkins
   plugin running on about 16,000 controllers: releases, reviews and fixes. Since September 2026 also
   [token-macro](https://github.com/jenkinsci/token-macro-plugin) and [jaxb](https://github.com/jenkinsci/jaxb-plugin).
-- **Collaborator on [jackson-databind-nullable](https://github.com/OpenAPITools/jackson-databind-nullable)**,
-  the `JsonNullable` module that every openapi-generator Java client depends on. Cut its
-  [0.2.12 release](https://github.com/OpenAPITools/jackson-databind-nullable/releases/tag/v0.2.12).
-- **Contributor to [openapi-generator](https://github.com/OpenAPITools/openapi-generator)**: Spring Boot 4
-  support for `JsonNullable` ([#24990](https://github.com/OpenAPITools/openapi-generator/pull/24990)) and
-  the update to 0.2.12 ([#25096](https://github.com/OpenAPITools/openapi-generator/pull/25096)).
+- **Member of [OpenAPITools](https://github.com/OpenAPITools), releasing
+  [jackson-databind-nullable](https://github.com/OpenAPITools/jackson-databind-nullable)**, the `JsonNullable`
+  module that every openapi-generator Java client depends on: cut
+  [0.2.12](https://github.com/OpenAPITools/jackson-databind-nullable/releases/tag/v0.2.12) and
+  [0.2.13](https://github.com/OpenAPITools/jackson-databind-nullable/releases/tag/v0.2.13).
+- **Contributor to [openapi-generator](https://github.com/OpenAPITools/openapi-generator)**: added
+  `useRecords`, Java records for generated Spring models, across seven merged PRs starting with
+  [#25200](https://github.com/OpenAPITools/openapi-generator/pull/25200), and brought `JsonNullable` to Spring
+  Boot 4 and Jackson 3 ([#24990](https://github.com/OpenAPITools/openapi-generator/pull/24990),
+  [#25151](https://github.com/OpenAPITools/openapi-generator/pull/25151)).
+- **Contributor to [floci](https://github.com/floci-io/floci)**, the AWS local emulator: CloudFormation fixes
+  for properties a new template drops on update, and a
+  [ratchet test](https://github.com/floci-io/floci/pull/6807) on what each provisioner reads.
 - **Contributor to [OwnTV](https://github.com/ahXN00/OwnTV)**, an Android TV media player: playlist parsing,
   EPG matching and channel sorting fixes in [its core](https://github.com/ahXN00/OwnTV_Core/pulls?q=author%3ASekator778).
 
 ---
 
 ### Selected work
+
+#### [Herd](https://github.com/Sekator778/playherd) &nbsp;![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) ![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
+
+A live crowd-versus-market game on Chia testnet, and the place where I took a
+server from a measured ceiling to an LMAX-style core. A durable commit per bet
+under a shared lock stopped between 25 and 50 bets per second over HTTP. JFR
+pointed at rare slow commits queuing everyone behind that lock, so the logic
+moved to one in-memory thread, with an event journal, group commit, snapshots
+checked by replay, and no answer before the sync. In process it reached 114,000
+to 133,000 bets per second at 1024 clients on a virtual disk; the HTTP path is
+the next measurement.
+
+Round results are anchored on chain by a Rust service, and a public verifier
+lets anyone hold the live site to account. The
+[case study](https://github.com/Sekator778/playherd/blob/main/docs/architecture/single-writer-pipeline.md)
+has the numbers, the failure rules and the places the design still departs from
+LMAX, with the reason for each. [Live demo](https://playherd.app).
 
 #### [ai-delivery](https://github.com/Sekator778/ai-delivery) &nbsp;![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
@@ -128,6 +153,9 @@ deposits, where the on-chain side of my payments interest lives.
   loop exists because something actually broke: a double-spawn race became an
   authoritative `flock`, a review nitpick loop became a convergence check, and
   "timeout" stopped being treated as "crash".
+- **Measure before the rewrite.** Herd's load rig came first: the first suspect,
+  round settlement, was not the final bottleneck, and numbers from macOS did not
+  transfer to a server.
 - **Fix it where it belongs.** Local hacks stay local; anything generic becomes a
   patch against the upstream project.
 - **Infrastructure is a product.** Versioned modules with real inputs, not stacks
